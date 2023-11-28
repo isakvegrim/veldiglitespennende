@@ -1,0 +1,30 @@
+Sub PopulateFile()
+
+Dim selected_cells As Range
+
+Set selected_cells = Range(ActiveCell, ActiveCell.Offset(0, 7))
+
+Dim wApp As Word.Application
+Dim wDoc As Word.Document
+Set wApp = CreateObject("Word.Application")
+wApp.Visible = True
+
+Dim template_path As String
+template_path = "C:\Users\isakh\Documents\" + selected_cells(1, 6) + ".dotx"
+
+Set wDoc = wApp.Documents.Add(Template:=template_path, NewTemplate:=False, DocumentType:=0)
+
+With wDoc
+    .Application.Selection.Find.Text = "<<Navn>>"
+    .Application.Selection.Find.Execute
+    .Application.Selection = selected_cells(1, 1)
+    .Application.Selection.EndOf
+    
+    .Application.Selection.Find.Text = "<<Avdelig>>"
+    .Application.Selection.Find.Execute
+    .Application.Selection = selected_cells(1, 2)
+    .Application.Selection.EndOf
+    
+End With
+
+End Sub
