@@ -42,6 +42,12 @@ Sub ClearAll()
 
 End Sub
 
+Sub NyPerson()
+    Sheets("Ark1").OLEObjects("CheckBox1").Object.Value = False
+    Sheets("Ark1").OLEObjects("CheckBox2").Object.Value = False
+    Sheets("Ark1").OLEObjects("CheckBox3").Object.Value = False
+End Sub
+
 Sub Fletting()
     Dim last_row As Long
     Dim start_row As Long
