@@ -1,30 +1,57 @@
-Sub PopulateFile()
-
-Dim selected_cells As Range
-
-Set selected_cells = Range(ActiveCell, ActiveCell.Offset(0, 7))
-
-Dim wApp As Word.Application
-Dim wDoc As Word.Document
-Set wApp = CreateObject("Word.Application")
-wApp.Visible = True
-
-Dim template_path As String
-template_path = "C:\Users\isakh\Documents\" + selected_cells(1, 6) + ".dotx"
-
-Set wDoc = wApp.Documents.Add(Template:=template_path, NewTemplate:=False, DocumentType:=0)
-
-With wDoc
-    .Application.Selection.Find.Text = "<<Navn>>"
-    .Application.Selection.Find.Execute
-    .Application.Selection = selected_cells(1, 1)
-    .Application.Selection.EndOf
+Sub AddPerson()
+    Dim navn, avdeling, briefing_officer, billet_teip, billet_hvg, billet_nn As String
+    Dim avail_row As Long
+    navn = Range("D7").Value
+    avdeling = Range("D8").Value
+    briefing_officer = Range("D9").Value
+    billet_teip = Range("D11").Value
+    billet_hvg = Range("E11").Value
+    billet_nn = Range("F11").Value
     
-    .Application.Selection.Find.Text = "<<Avdelig>>"
-    .Application.Selection.Find.Execute
-    .Application.Selection = selected_cells(1, 2)
-    .Application.Selection.EndOf
+    avail_row = Range("I999").End(xlUp).Row + 1
     
-End With
+    
+    
+    'Range("I" & avail_row).Value = "HEI"
+    
+    Range("I" & avail_row).Value = navn
+    Range("J" & avail_row).Value = avdeling
+    Range("K" & avail_row).Value = briefing_officer
+    Range("L" & avail_row).Value = billet_teip
+    Range("M" & avail_row).Value = billet_hvg
+    Range("N" & avail_row).Value = billet_nn
+    
+    If Sheets("Ark1").OLEObjects("CheckBox1").Object.Value = True Then
+        Range("L" & avail_row).Interior.Color = RGB(51, 255, 51)
+    End If
+    
+    If Sheets("Ark1").OLEObjects("CheckBox2").Object.Value = True Then
+        Range("M" & avail_row).Interior.Color = RGB(51, 255, 51)
+    End If
+    
+    If Sheets("Ark1").OLEObjects("CheckBox3").Object.Value = True Then
+        Range("N" & avail_row).Interior.Color = RGB(51, 255, 51)
+    End If
+    
+    'MsgBox (Cells(Rows.Count, "I").End(xlUp).Row)
+End Sub
 
+Sub ClearAll()
+    Range("I8", "N999").ClearContents
+    Range("I8", "N999").Interior.Color = xlNone
+
+End Sub
+
+Sub Fletting()
+    Dim last_row As Long
+    Dim start_row As Long
+    last_row = Cells(Rows.Count, "I").End(xlUp).Row
+    
+    For start_row = 8 To last_row
+        Range("I" & start_row).Value = "hei"
+        'Kode her
+    Next start_row
+    
+    
+    
 End Sub
